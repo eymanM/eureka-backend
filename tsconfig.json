@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ES2023",
+      "DOM",
+      "WebWorker"
+    ],
+    "moduleResolution": "node",
+    "allowJs": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "experimentalDecorators": true,
+    "outDir": "lib",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "module": "esnext"
+  },
+  "include": [
+    "**/*.ts",
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    ".vscode/**/*",
+    ".idea/**/*",
+  ],
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+   "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "esm": true,
+  },
+}

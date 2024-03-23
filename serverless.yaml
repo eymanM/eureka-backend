@@ -1,0 +1,58 @@
+service: eureka-api
+useDotenv: true
+frameworkVersion: '3'
+
+provider:
+  name: 'aws'
+  runtime: 'nodejs20.x'
+  region: 'eu-west-1'
+  versionFunctions: false
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    SESSION_TABLE_NAME: '${self:service}-${sls:stage}-session'
+    SERVICE: '${self:service}'
+    STAGE: '${opt:stage}'
+
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - s3:*
+      Resource: '*'
+
+plugins:
+  - serverless-esbuild
+  - serverless-dotenv-plugin
+
+functions: ${file(./src/handlers/handlers.yml)}
+
+package:
+  excludeDevDependencies: true
+  patterns:
+    - '!.git/**'
+    - '!.gitignore'
+    - '!.github/**'
+    - '!.esbuild/**/*'
+    - '!.serverless/**'
+    - '!.vscode/**/*'
+    - '!.idea/**/*'
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: 'node20'
+    define:
+      require.resolve: undefined
+    platform: 'node'
+    exclude:
+      - aws-sdk
+      - typescript
+      - prettier
+  dotenv:
+    basePath: './'

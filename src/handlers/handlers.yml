@@ -1,0 +1,9 @@
+createCompletion:
+  handler: ./src/handlers/completion/handler.CreateCompletion
+  timeout: 30
+  memorySize: 1024
+  events:
+    - http:
+        cors: true
+        method: post
+        path: completion
